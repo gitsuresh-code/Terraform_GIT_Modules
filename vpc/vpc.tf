@@ -79,44 +79,44 @@ resource "aws_subnet" "database" {
 }
 
 
-# # Public Route Table
-# resource "aws_route_table" "public" {
-#   vpc_id = aws_vpc.main.id
+# Public Route Table
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
 
-#   tags = merge(
-#     var.public_route_table_tags,
-#     local.common_tags,
-#     {
-#         Name = "${local.common_name_suffix}-public"
-#     }
-#   )
-# }
+  tags = merge(
+    var.public_route_table_tags,
+    local.common_tags,
+    {
+        Name = "${local.common_name_suffix}-public"
+    }
+  )
+}
 
-# # Private Route Table
-# resource "aws_route_table" "private" {
-#   vpc_id = aws_vpc.main.id
+# Private Route Table
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
 
-#   tags = merge(
-#     var.private_route_table_tags,
-#     local.common_tags,
-#     {
-#         Name = "${local.common_name_suffix}-private"
-#     }
-#   )
-# }
+  tags = merge(
+    var.private_route_table_tags,
+    local.common_tags,
+    {
+        Name = "${local.common_name_suffix}-private"
+    }
+  )
+}
 
-# # database Route Table
-# resource "aws_route_table" "database" {
-#   vpc_id = aws_vpc.main.id
+# database Route Table
+resource "aws_route_table" "database" {
+  vpc_id = aws_vpc.main.id
 
-#   tags = merge(
-#     var.database_route_table_tags,
-#     local.common_tags,
-#     {
-#         Name = "${local.common_name_suffix}-database"
-#     }
-#   )
-# }
+  tags = merge(
+    var.database_route_table_tags,
+    local.common_tags,
+    {
+        Name = "${local.common_name_suffix}-database"
+    }
+  )
+}
 
 
 # # Public Route
