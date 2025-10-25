@@ -1,5 +1,5 @@
 variable "vpc_cidr" {
-    type = string
+    type = string  # this mandatory filed which user need to enter
 }
 
 variable "project_name" {
@@ -14,7 +14,11 @@ variable "environment" {
 
 variable "vpc_tags" {
   type = map
-  default = {}
+  default = {} # this is emplty declaration and optional for user input
 }
 
 
+variable "igw_tags" {
+    type = map
+    description = "this is the main enterance for VPC for ingress and egress"
+  }
