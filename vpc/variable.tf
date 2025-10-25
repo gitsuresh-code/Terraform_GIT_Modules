@@ -24,9 +24,9 @@ variable "igw_tags" {
     default = {} # this is emplty declaration and optional for user input
   }
 
-  variable "public_subnet_cidrs" {
-    type = list  # this mandatory filed which user need to enter
-}
+#   variable "public_subnet_cidrs" {
+#     type = list  # this mandatory filed which user need to enter
+# }
 
 
 
