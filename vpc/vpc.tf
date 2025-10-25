@@ -79,116 +79,116 @@ resource "aws_subnet" "database" {
 }
 
 
-# Public Route Table
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.main.id
+# # Public Route Table
+# resource "aws_route_table" "public" {
+#   vpc_id = aws_vpc.main.id
 
-  tags = merge(
-    var.public_route_table_tags,
-    local.common_tags,
-    {
-        Name = "${local.common_name_suffix}-public"
-    }
-  )
-}
+#   tags = merge(
+#     var.public_route_table_tags,
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name_suffix}-public"
+#     }
+#   )
+# }
 
-# Private Route Table
-resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.main.id
+# # Private Route Table
+# resource "aws_route_table" "private" {
+#   vpc_id = aws_vpc.main.id
 
-  tags = merge(
-    var.private_route_table_tags,
-    local.common_tags,
-    {
-        Name = "${local.common_name_suffix}-private"
-    }
-  )
-}
+#   tags = merge(
+#     var.private_route_table_tags,
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name_suffix}-private"
+#     }
+#   )
+# }
 
-# database Route Table
-resource "aws_route_table" "database" {
-  vpc_id = aws_vpc.main.id
+# # database Route Table
+# resource "aws_route_table" "database" {
+#   vpc_id = aws_vpc.main.id
 
-  tags = merge(
-    var.database_route_table_tags,
-    local.common_tags,
-    {
-        Name = "${local.common_name_suffix}-database"
-    }
-  )
-}
-
-
-# Public Route
-resource "aws_route" "public" {
-  route_table_id            = aws_route_table.public.id
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.main.id
-}
+#   tags = merge(
+#     var.database_route_table_tags,
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name_suffix}-database"
+#     }
+#   )
+# }
 
 
-# Elastic IP
-resource "aws_eip" "nat" {
-  domain   = "vpc"
-
-  tags = merge(
-    var.eip_tags,
-    local.common_tags,
-    {
-        Name = "${local.common_name_suffix}-nat"
-    }
-  )
-}
+# # Public Route
+# resource "aws_route" "public" {
+#   route_table_id            = aws_route_table.public.id
+#   destination_cidr_block    = "0.0.0.0/0"
+#   gateway_id = aws_internet_gateway.main.id
+# }
 
 
-# NAT gateway
-resource "aws_nat_gateway" "nat" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public[0].id
+# # Elastic IP
+# resource "aws_eip" "nat" {
+#   domain   = "vpc"
 
-  tags = merge(
-    var.nat_gateway_tags,
-    local.common_tags,
-    {
-        Name = "${local.common_name_suffix}-nat gw"
-    }
-  )
+#   tags = merge(
+#     var.eip_tags,
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name_suffix}-nat"
+#     }
+#   )
+# }
 
-  # To ensure proper ordering, it is recommended to add an explicit dependency
-  # on the Internet Gateway for the VPC.
+
+# # NAT gateway
+# resource "aws_nat_gateway" "nat" {
+#   allocation_id = aws_eip.nat.id
+#   subnet_id     = aws_subnet.public[0].id
+
+#   tags = merge(
+#     var.nat_gateway_tags,
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name_suffix}-nat gw"
+#     }
+#   )
+
+#   # To ensure proper ordering, it is recommended to add an explicit dependency
+#   # on the Internet Gateway for the VPC.
  
-}
+# }
 
 
-# Private egress route through NAT
-resource "aws_route" "private" {
-  route_table_id            = aws_route_table.private.id
-  destination_cidr_block    = "0.0.0.0/0"
-  nat_gateway_id = aws_nat_gateway.nat.id
-}
+# # Private egress route through NAT
+# resource "aws_route" "private" {
+#   route_table_id            = aws_route_table.private.id
+#   destination_cidr_block    = "0.0.0.0/0"
+#   nat_gateway_id = aws_nat_gateway.nat.id
+# }
 
-# Database egress route through NAT
-resource "aws_route" "database" {
-  route_table_id            = aws_route_table.database.id
-  destination_cidr_block    = "0.0.0.0/0"
-  nat_gateway_id = aws_nat_gateway.nat.id
-}
+# # Database egress route through NAT
+# resource "aws_route" "database" {
+#   route_table_id            = aws_route_table.database.id
+#   destination_cidr_block    = "0.0.0.0/0"
+#   nat_gateway_id = aws_nat_gateway.nat.id
+# }
 
 
-resource "aws_route_table_association" "public" {
-  count = length(var.public_subnet_cidrs)
-  subnet_id      = aws_subnet.public[count.index].id
-  route_table_id = aws_route_table.public.id
-}
+# resource "aws_route_table_association" "public" {
+#   count = length(var.public_subnet_cidrs)
+#   subnet_id      = aws_subnet.public[count.index].id
+#   route_table_id = aws_route_table.public.id
+# }
 
-resource "aws_route_table_association" "private" {
-  count = length(var.private_subnet_cidrs)
-  subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private.id
-}
+# resource "aws_route_table_association" "private" {
+#   count = length(var.private_subnet_cidrs)
+#   subnet_id      = aws_subnet.private[count.index].id
+#   route_table_id = aws_route_table.private.id
+# }
 
-resource "aws_route_table_association" "database" {
-  count = length(var.database_subnet_cidrs)
-  subnet_id      = aws_subnet.database[count.index].id
-  route_table_id = aws_route_table.database.id
-}
+# resource "aws_route_table_association" "database" {
+#   count = length(var.database_subnet_cidrs)
+#   subnet_id      = aws_subnet.database[count.index].id
+#   route_table_id = aws_route_table.database.id
+# }

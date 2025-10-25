@@ -1,5 +1,5 @@
 variable "vpc_cidr" {
-    type = string  # this mandatory filed which user need to enter
+    type = string  # MANDATORY
 }
 
 variable "project_name" {
@@ -25,7 +25,7 @@ variable "igw_tags" {
 
 #PUBLIC SUBNET cidr and tags
 variable "public_subnet_cidrs" {
-    type = list  # this mandatory filed which user need to enter
+    type = list  # MANDATORY
 }
 
 variable "public_subnet_tags" {
@@ -35,7 +35,7 @@ variable "public_subnet_tags" {
 
 #PRIVATE SUBNET cidr and tags
 variable "private_subnet_cidrs" {
-    type = list
+    type = list #MANDATORY
 
 }
 
@@ -57,29 +57,29 @@ variable "database_subnet_tags" {
 #ROUTE TABLE tags
 variable "public_route_table_tags" {
   type = map
-  default = {}
+  default = {} # this is emplty declaration and optional for user input
 }
 
 variable "private_route_table_tags" {
   type = map
-  default = {}
+  default = {} # this is emplty declaration and optional for user input
 }
 
 variable "database_route_table_tags" {
   type = map
-  default = {}
+  default = {} # this is emplty declaration and optional for user input
 }
 
 
 #Elastic IP
 variable "eip_tags" {
     type=map 
-    default={} 
+    default={}  # this is emplty declaration and optional for user input
 }
 
 
 #NAT tags
 variable "nat_gateway_tags" {
     type = map
-    default = {}
+    default = {} # this is emplty declaration and optional for user input
 }
