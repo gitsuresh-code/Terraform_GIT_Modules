@@ -44,5 +44,12 @@ variable "private_subnet_tags" {
   default = {} # this is emplty declaration and optional for user input
 }
 
+#DATABASE SUBNET cidr and tags
+variable "database_subnet_cidrs" {
+    type=list
+}
 
-
+variable "database_subnet_tags" {
+    type = map
+  default = {} # this is emplty declaration and optional for user input
+}
