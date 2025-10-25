@@ -127,37 +127,37 @@ resource "aws_route" "public" {
 }
 
 
-# # Elastic IP
-# resource "aws_eip" "nat" {
-#   domain   = "vpc"
+# Elastic IP
+resource "aws_eip" "nat" {
+  domain   = "vpc"
 
-#   tags = merge(
-#     var.eip_tags,
-#     local.common_tags,
-#     {
-#         Name = "${local.common_name_suffix}-nat"
-#     }
-#   )
-# }
+  tags = merge(
+    var.eip_tags,
+    local.common_tags,
+    {
+        Name = "${local.common_name_suffix}-nat"
+    }
+  )
+}
 
 
-# # NAT gateway
-# resource "aws_nat_gateway" "nat" {
-#   allocation_id = aws_eip.nat.id
-#   subnet_id     = aws_subnet.public[0].id
+# NAT gateway
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id
 
-#   tags = merge(
-#     var.nat_gateway_tags,
-#     local.common_tags,
-#     {
-#         Name = "${local.common_name_suffix}-nat gw"
-#     }
-#   )
+  tags = merge(
+    var.nat_gateway_tags,
+    local.common_tags,
+    {
+        Name = "${local.common_name_suffix}-nat gw"
+    }
+  )
 
-#   # To ensure proper ordering, it is recommended to add an explicit dependency
-#   # on the Internet Gateway for the VPC.
-#   depends_on = [aws_internet_gateway.main]
-# }
+  # To ensure proper ordering, it is recommended to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.main]
+}
 
 
 # Private egress route through NAT
