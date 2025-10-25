@@ -16,7 +16,7 @@ resource "aws_vpc" "main" {
 
 # IGW
 resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.roboshop_vpc.id
+  vpc_id = aws_vpc.main.id
 
   tags = merge(
     var.igw_tags, #called from module variables
