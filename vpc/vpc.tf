@@ -22,7 +22,7 @@ resource "aws_internet_gateway" "main" {
     var.igw_tags, #called from module variables
     local.common_tags, #called from locals
     {
-        Name = local.common_name_suffix
+        Name = "${local.common_name_suffix}-igw"
     }
   )
 }
