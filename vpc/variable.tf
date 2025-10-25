@@ -21,4 +21,5 @@ variable "vpc_tags" {
 variable "igw_tags" {
     type = map
     description = "this is the main enterance for VPC for ingress and egress"
+    default = {} # this is emplty declaration and optional for user input
   }
