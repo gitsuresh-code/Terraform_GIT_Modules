@@ -23,3 +23,16 @@ variable "igw_tags" {
     description = "this is the main enterance for VPC for ingress and egress"
     default = {} # this is emplty declaration and optional for user input
   }
+
+  variable "public_subnet_cidrs" {
+    type = list  # this mandatory filed which user need to enter
+}
+
+
+
+
+variable "public_subnet_tags" {
+    type = map
+    default = {}
+  
+}
