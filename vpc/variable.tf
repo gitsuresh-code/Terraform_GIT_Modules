@@ -53,3 +53,12 @@ variable "database_subnet_tags" {
     type = map
   default = {} # this is emplty declaration and optional for user input
 }
+
+#ROUTE TABLE tags
+variable "public_route_table_tags" {
+  type = map
+  default = {}
+}
+
+
+
