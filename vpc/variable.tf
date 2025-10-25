@@ -35,7 +35,7 @@ variable "public_subnet_tags" {
 
 #PRIVATE SUBNET cidr and tags
 variable "private_subnet_cidrs" {
-    type = map
+    type = list
 
 }
 
