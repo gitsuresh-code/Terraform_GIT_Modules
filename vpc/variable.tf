@@ -30,7 +30,19 @@ variable "public_subnet_cidrs" {
 
 variable "public_subnet_tags" {
     type = map
-    default = {}
+    default = {} # this is emplty declaration and optional for user input
 }
+
+#PRIVATE SUBNET cidr and tags
+variable "private_subnet_cidrs" {
+    type = map
+
+}
+
+variable "private_subnet_tags" {
+    type = map
+  default = {} # this is emplty declaration and optional for user input
+}
+
 
 
