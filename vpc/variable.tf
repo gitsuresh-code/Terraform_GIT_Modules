@@ -83,3 +83,9 @@ variable "nat_gateway_tags" {
     type = map
     default = {} # this is emplty declaration and optional for user input
 }
+
+variable "is_peering_required" {
+  type = bool
+  default = true
+  
+}
